@@ -9,7 +9,7 @@ import mysql.connector
 
 class StudenteDao:
 
-    def getStudenti(self):
+    def getStudentiDAO(self):
         cnx = database.DB_connect.get_connection()
 
         cursor = cnx.cursor()
@@ -27,6 +27,6 @@ class StudenteDao:
 
 if __name__=="__main__":
     a= StudenteDao()
-    lista=a.getStudenti()
+    lista=a.getStudentiDAO()
     for e in lista:
         print(e)

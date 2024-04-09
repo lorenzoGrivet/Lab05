@@ -1,10 +1,14 @@
 import flet as ft
 
+import database
+from database.corso_DAO import CorsoDao
+
 
 class View(ft.UserControl):
     def __init__(self, page: ft.Page):
         super().__init__()
         # page stuff
+
         self._page = page
         self._page.title = "Lab O5 - segreteria studenti"
         self._page.horizontal_alignment = 'CENTER'
@@ -26,17 +30,30 @@ class View(ft.UserControl):
 
         #ROW with some controls
         # text field for the name
-        self.txt_corso = ft.TextField(
-            label="Corso",
-            width=200,
-            hint_text="Inserisci corso"
-        )
+        self.txt_corso = ft.Dropdown(label="Corso",width=500,hint_text="Inserisci corso")
+        self.fillCorso()
 
         # button for the "hello" reply
-        self.btn_hello = ft.ElevatedButton(text="Hello", on_click=self._controller.handle_hello)
-        row1 = ft.Row([self.txt_corso, self.btn_hello],
-                      alignment=ft.MainAxisAlignment.CENTER)
-        self._page.controls.append(row1)
+        self.btn_cerca_iscritti = ft.ElevatedButton(text="Cerca Iscritti",on_click=self._controller.cercaIscritti)
+
+
+        row1 = ft.Row([self.txt_corso, self.btn_cerca_iscritti],alignment=ft.MainAxisAlignment.CENTER)
+
+        #Row2
+        self.txt_matricola = ft.TextField(label="Matricola")
+        self.txt_nome=ft.TextField(label="Nome",read_only=True)
+        self.txt_cognome = ft.TextField(label="Cognome", read_only=True)
+
+        row2=ft.Row([self.txt_matricola,self.txt_cognome,self.txt_nome],alignment=ft.MainAxisAlignment.CENTER)
+
+        #Row3
+        self.btn_cerca_studente = ft.ElevatedButton(text="Cerca studente")
+        self.btn_cerca_corsi = ft.ElevatedButton(text="Cerca corsi")
+        self.btn_cerca_iscritti = ft.ElevatedButton(text="Cerca iscritti")
+
+        row3=ft.Row([self.btn_cerca_studente,self.btn_cerca_corsi,self.btn_cerca_iscritti],alignment=ft.MainAxisAlignment.CENTER)
+
+        self._page.add(row1,row2,row3)
 
         # List View where the reply is printed
         self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
@@ -64,3 +81,21 @@ class View(ft.UserControl):
 
     def update_page(self):
         self._page.update()
+
+    def fillCorso(self):
+        for a in database.corso_DAO.CorsoDao().getCorsiDAO():
+            self.txt_corso.options.append(ft.dropdown.Option(key=a.codins,text=a.nome))
+        self.update_page()
+
+    def stampaVideo(self,lista):
+        self.lv=ft.ListView(auto_scroll=True,spacing=4,padding=20,expand=100)
+
+        for a in lista:
+            self.lv.controls.append(ft.Text(str(a)))
+
+        self._page.add(ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT))
+
+        self._page.add(self.lv)
+        self._page.update()
+
+

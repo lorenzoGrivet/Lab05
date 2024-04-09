@@ -8,7 +8,7 @@ import mysql.connector
 
 class CorsoDao:
 
-    def getCorsi(self):
+    def getCorsiDAO(self):
         cnx = database.DB_connect.get_connection()
 
         cursor = cnx.cursor()
@@ -26,6 +26,6 @@ class CorsoDao:
 
 if __name__=="__main__":
     a= CorsoDao()
-    lista=a.getCorsi()
+    lista=a.getCorsiDAO()
     for e in lista:
         print(e)

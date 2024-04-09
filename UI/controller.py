@@ -1,5 +1,7 @@
 import flet as ft
 
+from model import model
+
 
 class Controller:
     def __init__(self, view, model):
@@ -7,6 +9,23 @@ class Controller:
         self._view = view
         # the model, which implements the logic of the program and holds the data
         self._model = model
+
+
+    def cercaIscritti(self,e):
+        corso= self._view.txt_corso.value
+        risultato=[]
+        b=False
+
+        for a in model.Model().getIscrizioni().keys():
+            if a==corso:
+                b=True
+                risultato=model.Model().getIscrizioni()[a]
+
+                self._view.stampaVideo(risultato)
+
+        if b==False:
+            self._view.create_alert("Corso vuoto!!")
+
 
     def handle_hello(self, e):
         """Simple function to handle a button-pressed event,
