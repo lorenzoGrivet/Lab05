@@ -22,6 +22,8 @@ class View(ft.UserControl):
         self.txt_result = None
         self.txt_container = None
 
+        self.lv=None
+
     def load_interface(self):
         """Function that loads the graphical elements of the view"""
         # title
@@ -54,6 +56,7 @@ class View(ft.UserControl):
         row3=ft.Row([self.btn_cerca_studente,self.btn_cerca_corsi,self.btn_cerca_iscritti],alignment=ft.MainAxisAlignment.CENTER)
 
         self._page.add(row1,row2,row3)
+
 
         # List View where the reply is printed
         self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
@@ -88,14 +91,23 @@ class View(ft.UserControl):
         self.update_page()
 
     def stampaVideo(self,lista):
-        self.lv=ft.ListView(auto_scroll=True,spacing=4,padding=20,expand=100)
+
+        self.txt_result.clean()
+
+        i=0
+        #self._page.add(ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT))
+        #self.txt_count=ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT)
 
         for a in lista:
-            self.lv.controls.append(ft.Text(str(a)))
+            if i==0:
+                self.txt_result.controls.append(ft.Text(f"Ci sono {len(lista)} studenti iscritti:"))
+                i+=1
 
-        self._page.add(ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT))
+            self.txt_result.controls.append(ft.Text(str(a)))
 
-        self._page.add(self.lv)
+
+
+
         self._page.update()
 
 

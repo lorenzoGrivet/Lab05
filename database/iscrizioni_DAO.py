@@ -12,9 +12,10 @@ class Iscrizioni_DAO:
         cursor.execute(query)
         result={}
         studente=None
+        alunni=database.studente_DAO.StudenteDao().getStudentiDAO()
 
         for row in cursor:
-            for alunno in database.studente_DAO.StudenteDao().getStudentiDAO():
+            for alunno in alunni:
                 if alunno.matricola==row[0]:
                     studente=alunno
 

@@ -1,13 +1,17 @@
-from database.corso_DAO import CorsoDao
-from database.iscrizioni_DAO import Iscrizioni_DAO
-from database.studente_DAO import StudenteDao
+#from database.corso_DAO import CorsoDao
+#from database.iscrizioni_DAO import Iscrizioni_DAO
+#from database.studente_DAO import StudenteDao
+
+import database.studente_DAO
+import database.iscrizioni_DAO
+import database.corso_DAO
 
 
 class Model:
     def __init__(self):
-        self.corsi = CorsoDao().getCorsiDAO()
-        self.studenti = StudenteDao().getStudentiDAO()
-        self.iscrizioni=Iscrizioni_DAO().getIscrizioniDAO()
+        self.corsi = database.corso_DAO.CorsoDao().getCorsiDAO()
+        self.studenti = database.studente_DAO.StudenteDao().getStudentiDAO()
+        self.iscrizioni=database.iscrizioni_DAO.Iscrizioni_DAO().getIscrizioniDAO()
         pass
 
 
