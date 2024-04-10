@@ -51,9 +51,9 @@ class View(ft.UserControl):
         #Row3
         self.btn_cerca_studente = ft.ElevatedButton(text="Cerca studente",on_click=self._controller.cercaStudente)
         self.btn_cerca_corsi = ft.ElevatedButton(text="Cerca corsi",on_click=self._controller.cercaCorsi)
-        self.btn_cerca_iscritti = ft.ElevatedButton(text="Cerca iscritti")
+        self.btn_iscrivi = ft.ElevatedButton(text="Iscrivi",on_click=self._controller.iscrivi)
 
-        row3=ft.Row([self.btn_cerca_studente,self.btn_cerca_corsi,self.btn_cerca_iscritti],alignment=ft.MainAxisAlignment.CENTER)
+        row3=ft.Row([self.btn_cerca_studente,self.btn_cerca_corsi,self.btn_iscrivi],alignment=ft.MainAxisAlignment.CENTER)
 
         self._page.add(row1,row2,row3)
 
@@ -87,7 +87,7 @@ class View(ft.UserControl):
 
     def fillCorso(self):
         for a in database.corso_DAO.CorsoDao().getCorsiDAO():
-            self.txt_corso.options.append(ft.dropdown.Option(key=a.codins,text=a.nome))
+            self.txt_corso.options.append(ft.dropdown.Option(key=a.codins,text=a.__str__()))
         self.update_page()
 
     def stampaVideo(self,a,output):

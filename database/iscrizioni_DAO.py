@@ -32,3 +32,16 @@ class Iscrizioni_DAO:
 
 
         return result
+
+    def iscrivi_Dao(self,studente,corso):
+        cnx = database.DB_connect.get_connection()
+        cursor = cnx.cursor()
+        query="""INSERT INTO iscrizione
+        (matricola,codins)
+        VALUES (%s,%s)
+        """
+        cursor.execute(query,(studente,corso))
+
+        cnx.commit()
+        cursor.close()
+        cnx.close()

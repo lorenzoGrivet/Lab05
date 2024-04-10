@@ -10,7 +10,7 @@ class Corso:
 
 
     def __str__(self):
-        return f"{self.codins}, {self.crediti}, {self.nome}, {self.pd}"
+        return f"{self.nome} ({self.codins})"
 
     def __eq__(self, other):
         return self.codins== other.codins

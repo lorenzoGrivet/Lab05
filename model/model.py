@@ -15,6 +15,12 @@ class Model:
         pass
 
 
+    def aggiungiStudente(self,studente, corso):
+        matricola=studente.matricola
+        codice=corso.codins
+
+        database.iscrizioni_DAO.Iscrizioni_DAO().iscrivi_Dao(matricola,codice)
+
 
     def getStudenti(self):
         return self.studenti

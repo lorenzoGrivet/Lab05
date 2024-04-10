@@ -73,6 +73,34 @@ class Controller:
 
 
 
+    def iscrivi(self,e):
+        s= None
+        c=None
+        lista_studenti=model.Model().getStudenti()
+        lista_corsi=model.Model().getCorsi()
+        diz_corsi=model.Model().getIscrizioni()
+        a=False
+
+        for i in lista_studenti:
+            if str(i.matricola) == self._view.txt_matricola.value:
+                s = i
+
+        if s is None:
+            self._view.create_alert("Studente inesistente!!")
+        else:
+
+            for i in lista_corsi:
+                if str(i.codins) == self._view.txt_corso.value:
+                    c = i
+
+            for alunno in diz_corsi[c.codins]:
+                if str(alunno.matricola)== str(s.matricola):
+                    self._view.create_alert("Studente gia iscritto!!")
+                    a=True
+
+            if a==False:
+                self._model.aggiungiStudente(s,c)
+
     def handle_hello(self, e):
         """Simple function to handle a button-pressed event,
         and consequently print a message on screen"""
