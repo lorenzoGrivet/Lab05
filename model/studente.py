@@ -11,7 +11,7 @@ class Studente:
         return f"{self.matricola}, {self.cognome}, {self.nome}, {self.CDS}"
 
     def __eq__(self, other):
-        return self.matricola== other.matricola
+        return self.matricola==other.matricola
 
     def __hash__(self):
         return hash(self.matricola)

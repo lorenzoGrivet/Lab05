@@ -1,6 +1,6 @@
 import flet as ft
 
-from model import model
+from model import model, studente, corso
 
 
 class Controller:
@@ -21,10 +21,56 @@ class Controller:
                 b=True
                 risultato=model.Model().getIscrizioni()[a]
 
-                self._view.stampaVideo(risultato)
+                self._view.stampaVideo("iscritti",risultato)
 
         if b==False:
             self._view.create_alert("Corso vuoto!!")
+
+
+    def cercaStudente(self,e):
+        matricola = self._view.txt_matricola
+        s= studente.Studente
+        b=False
+
+        for a in model.Model().getStudenti():
+            if str(a.matricola)==str(matricola.value):
+                s=a
+                b=True
+
+        if b==True:
+            self._view.stampaVideo("studente",s)
+        else:
+            self._view.create_alert("Studente inesistente!!")
+
+
+    def cercaCorsi(self,e):
+        s=None
+        risultato=[]
+        diz_esami=model.Model().getIscrizioni()
+        lista_corsi=model.Model().getCorsi()
+
+        for i in model.Model().getStudenti():
+            if str(i.matricola)==self._view.txt_matricola.value:
+                s=i
+
+        if s is None:
+            self._view.create_alert("Studente inesistente!!")
+        else:
+
+            for cTemp in diz_esami.keys():
+
+                for alunno in diz_esami[cTemp]:
+                    if str(alunno.matricola)==str(s.matricola):
+                        #aggiungere corso a lista risultato
+                        for c in lista_corsi:
+                            if str(c.codins) == str(cTemp):
+                                risultato.append(c)
+
+            if len(risultato)==0:
+                self._view.create_alert("Studente non iscritto ad alcun corso!!")
+            else:
+                self._view.stampaVideo("corsi",risultato)
+
 
 
     def handle_hello(self, e):

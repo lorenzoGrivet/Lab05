@@ -1,11 +1,13 @@
 import mysql.connector
 from mysql.connector import errorcode
+import pathlib
 
 
 def get_connection() -> mysql.connector.connection:
     try:
-        #cnx = mysql.connector.connect(option_files='"C:/Users/lorig/Desktop/Lab05/database/connector.cnf"')
-        cnx= mysql.connector.connect(user='root',password='password',host='127.0.0.1',database='iscritticorsi')
+        #cnx = mysql.connector.connect(option_files="C:/Users/lorig/Desktop/Lab05/database/connector.cnf")
+        cnx = mysql.connector.connect(option_files=f"{pathlib.Path().resolve()}\database\connector.cnf")
+        #cnx= mysql.connector.connect(user='root',password='password',host='127.0.0.1',database='iscritticorsi')
 
         return cnx
 

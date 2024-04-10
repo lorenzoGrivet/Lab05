@@ -49,8 +49,8 @@ class View(ft.UserControl):
         row2=ft.Row([self.txt_matricola,self.txt_cognome,self.txt_nome],alignment=ft.MainAxisAlignment.CENTER)
 
         #Row3
-        self.btn_cerca_studente = ft.ElevatedButton(text="Cerca studente")
-        self.btn_cerca_corsi = ft.ElevatedButton(text="Cerca corsi")
+        self.btn_cerca_studente = ft.ElevatedButton(text="Cerca studente",on_click=self._controller.cercaStudente)
+        self.btn_cerca_corsi = ft.ElevatedButton(text="Cerca corsi",on_click=self._controller.cercaCorsi)
         self.btn_cerca_iscritti = ft.ElevatedButton(text="Cerca iscritti")
 
         row3=ft.Row([self.btn_cerca_studente,self.btn_cerca_corsi,self.btn_cerca_iscritti],alignment=ft.MainAxisAlignment.CENTER)
@@ -90,23 +90,35 @@ class View(ft.UserControl):
             self.txt_corso.options.append(ft.dropdown.Option(key=a.codins,text=a.nome))
         self.update_page()
 
-    def stampaVideo(self,lista):
+    def stampaVideo(self,a,output):
 
         self.txt_result.clean()
 
-        i=0
-        #self._page.add(ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT))
-        #self.txt_count=ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT)
 
-        for a in lista:
-            if i==0:
-                self.txt_result.controls.append(ft.Text(f"Ci sono {len(lista)} studenti iscritti:"))
-                i+=1
+        if a=="iscritti":
+            i=0
+            #self._page.add(ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT))
+            #self.txt_count=ft.Text(f"Ci sono {len(lista)} studenti iscritti:", text_align=ft.TextAlign.LEFT)
 
-            self.txt_result.controls.append(ft.Text(str(a)))
+            for a in output:
+                if i==0:
+                    self.txt_result.controls.append(ft.Text(f"Ci sono {len(output)} studenti iscritti:"))
+                    i+=1
 
+                self.txt_result.controls.append(ft.Text(str(a)))
 
+        elif a=="studente":
+            self.txt_nome.value = output.nome
+            self.txt_cognome.value=output.cognome
 
+        elif a=="corsi":
+            i=0
+            for a in output:
+                if i == 0:
+                    self.txt_result.controls.append(ft.Text(f"Risultano {len(output)} corsi:"))
+                    i += 1
+
+                self.txt_result.controls.append(ft.Text(str(a)))
 
         self._page.update()
 
